@@ -12,9 +12,7 @@ class SplashScreen extends StatelessWidget {
     Future.delayed(const Duration(seconds: 4), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(
-            builder: (context) =>
-                const LoginPage()), 
+        MaterialPageRoute(builder: (context) => const LoginPage()),
       );
     });
 
@@ -30,7 +28,7 @@ class SplashScreen extends StatelessWidget {
                 height: MediaQuery.of(context).size.width * 0.5,
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage('.dart_tool/assets/splashPhoto.png'),
+                    image: AssetImage('assets/images/splashPhoto.png'),
                   ),
                 ),
               ),
@@ -49,4 +47,3 @@ class SplashScreen extends StatelessWidget {
     );
   }
 }
-

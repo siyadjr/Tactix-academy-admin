@@ -29,7 +29,7 @@ class ScreenHome extends StatelessWidget {
                           decoration: const BoxDecoration(
                             image: DecorationImage(
                               image: AssetImage(
-                                  '.dart_tool/assets/boss.png'), // Corrected asset path
+                                  'assets/images/boss.png'), // Corrected asset path
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -80,8 +80,7 @@ class ScreenHome extends StatelessWidget {
                           height: constraints.maxWidth * 0.8,
                           decoration: const BoxDecoration(
                             image: DecorationImage(
-                              image: AssetImage(
-                                  '.dart_tool/assets/boss.png'),
+                              image: AssetImage('assets/images/boss.png'),
                               fit: BoxFit.cover,
                             ),
                           ),
