@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:tactix_academy_admin/Core/Theme/appcolour.dart';
-import 'package:tactix_academy_admin/Features/BottomNavigationBar/Presentation/Widgets/options_card.dart';
-import 'package:tactix_academy_admin/Features/BottomNavigationBar/Presentation/Widgets/settings_card.dart';
-import 'package:tactix_academy_admin/Features/Settings/Presentations/Pages/settings_page.dart';
+import 'package:tactix_academy_admin/Core/Constants/appcolour.dart';
+import 'package:tactix_academy_admin/Features/Home/Presentation/Widgets/options_card.dart';
+import 'package:tactix_academy_admin/Features/Home/Presentation/Widgets/settings_card.dart';
+import 'package:tactix_academy_admin/Features/Licence%20Requests/Presentations/Pages/request_lists.dart';
 
 class FeaturesContainer extends StatelessWidget {
   final double? height;
@@ -56,22 +56,22 @@ class FeaturesContainer extends StatelessWidget {
               child: ListView(
                 physics: const NeverScrollableScrollPhysics(),
                 children: [
-                  OptionsCard(
-                      context: context,
+                  const OptionsCard(
+                      nextPage: RequestLists(),
                       icon: Icons.group,
                       title: 'Teams',
                       value: '21',
                       color: Colors.blue),
                   const SizedBox(height: 12),
-                  OptionsCard(
-                      context: context,
+                  const OptionsCard(
+                      nextPage: RequestLists(),
                       icon: Icons.sports_soccer,
                       title: 'Players',
                       value: '85',
                       color: Colors.green),
                   const SizedBox(height: 12),
-                  OptionsCard(
-                      context: context,
+                  const OptionsCard(
+                      nextPage: RequestLists(),
                       icon: Icons.person,
                       title: 'Managers',
                       value: '21',

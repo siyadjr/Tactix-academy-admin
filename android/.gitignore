@@ -16,3 +16,4 @@ key.properties
 # Sensitive files
 lib/Core/Theme/secured.dart
 lib/firebase_options.dart
+lib/firebase_options.dart

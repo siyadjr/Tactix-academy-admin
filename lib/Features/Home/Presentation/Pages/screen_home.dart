@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:tactix_academy_admin/Core/Theme/appcolour.dart';
-import 'package:tactix_academy_admin/Features/BottomNavigationBar/Presentation/Widgets/app_bar.dart';
-import 'package:tactix_academy_admin/Features/BottomNavigationBar/Presentation/Widgets/feature_container.dart';
+import 'package:tactix_academy_admin/Core/Constants/appcolour.dart';
+import 'package:tactix_academy_admin/Features/Home/Presentation/Widgets/app_bar.dart';
+import 'package:tactix_academy_admin/Features/Home/Presentation/Widgets/feature_container.dart';
 
 class ScreenHome extends StatelessWidget {
   const ScreenHome({super.key});

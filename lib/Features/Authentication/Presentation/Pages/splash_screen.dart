@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tactix_academy_admin/Core/Theme/appcolour.dart';
+import 'package:tactix_academy_admin/Core/Constants/appcolour.dart';
 
-import 'package:tactix_academy_admin/Features/BottomNavigationBar/Presentation/Pages/sign_in.dart';
+import 'package:tactix_academy_admin/Features/Home/Presentation/Pages/sign_in.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});

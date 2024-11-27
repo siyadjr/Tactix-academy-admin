@@ -26,7 +26,6 @@ class RequestDetails extends StatelessWidget {
       ),
       body: LayoutBuilder(
         builder: (context, constraints) {
-          // Determine if we're on a wide screen
           bool isWideScreen = constraints.maxWidth > 900;
 
           return SingleChildScrollView(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tactix_academy_admin/Core/Theme/appcolour.dart';
-import 'package:tactix_academy_admin/Features/BottomNavigationBar/Presentation/Widgets/welcome.dart';
+import 'package:tactix_academy_admin/Core/Constants/appcolour.dart';
+import 'package:tactix_academy_admin/Features/Home/Presentation/Widgets/welcome.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});

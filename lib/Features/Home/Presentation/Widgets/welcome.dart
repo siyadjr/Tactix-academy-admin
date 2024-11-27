@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tactix_academy_admin/Core/Theme/secured.dart';
-import 'package:tactix_academy_admin/Features/BottomNavigationBar/Presentation/Pages/screen_home.dart';
-import 'package:tactix_academy_admin/Features/BottomNavigationBar/Presentation/Widgets/text_fields.dart';
+import 'package:tactix_academy_admin/Features/Home/Presentation/Pages/screen_home.dart';
+import 'package:tactix_academy_admin/Features/Home/Presentation/Widgets/text_fields.dart';
 
 class Welcome extends StatelessWidget {
   Welcome({
