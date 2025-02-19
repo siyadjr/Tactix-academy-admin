@@ -14,6 +14,11 @@ import 'package:tactix_academy_admin/Features/Home/data/repostiories/home_screen
 import 'package:tactix_academy_admin/Features/Home/domain/repositories/home_screen_repository.dart';
 import 'package:tactix_academy_admin/Features/Home/domain/usecases/home_use_case.dart';
 import 'package:tactix_academy_admin/Features/Home/presentation/bloc/home_screen_datas_bloc.dart';
+import 'package:tactix_academy_admin/Features/All%20teams/data/datasource/team_datasource.dart';
+import 'package:tactix_academy_admin/Features/All%20teams/data/repositories/team_repository_impl.dart';
+import 'package:tactix_academy_admin/Features/All%20teams/domain/repositories/team_repository.dart';
+import 'package:tactix_academy_admin/Features/All%20teams/domain/usecases/team_usecase.dart';
+import 'package:tactix_academy_admin/Features/All%20teams/presentation/bloc/all_teams_bloc.dart';
 
 final GetIt sl = GetIt.instance;
 
@@ -52,6 +57,18 @@ Future<void> setupLocator() async {
   );
   sl.registerFactory<PlayersBloc>(
     () => PlayersBloc(sl<GetPlayersUsecase>()),
+  );
+
+  // Teams Dependencies
+  sl.registerLazySingleton<TeamDatasource>(() => TeamDatasource());
+  sl.registerLazySingleton<TeamRepository>(
+    () => TeamRepositoryImpl(sl<TeamDatasource>()),
+  );
+  sl.registerLazySingleton<TeamUsecase>(
+    () => TeamUsecase(sl<TeamRepository>()),
+  );
+  sl.registerFactory<AllTeamsBloc>(
+    () => AllTeamsBloc(sl<TeamUsecase>()),
   );
 
   // Wait for any async initializations if needed

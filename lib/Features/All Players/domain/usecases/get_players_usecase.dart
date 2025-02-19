@@ -7,4 +7,8 @@ class GetPlayersUsecase {
   Future<List<PlayerModel>> getAllPlayers() async {
     return playerRepository.getAllPlayers();
   }
+
+  Future<void> deletePlayer(String id) async {
+    playerRepository.deletePlayer(id);
+  }
 }

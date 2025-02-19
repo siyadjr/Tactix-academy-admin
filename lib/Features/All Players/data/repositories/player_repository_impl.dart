@@ -9,4 +9,8 @@ class PlayerRepositoryImpl implements PlayerRepository {
   Future<List<PlayerModel>> getAllPlayers() async {
     return dataSource.getAllPlayers();
   }
+
+  Future<void> deletePlayer(String id) async {
+    return dataSource.deletePlayer(id);
+  }
 }

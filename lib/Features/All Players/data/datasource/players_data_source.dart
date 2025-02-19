@@ -51,4 +51,25 @@ class PlayersDataSource {
 
     return teamNames;
   }
+
+Future<void> deletePlayer(String id) async {
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  // Delete the player from the "Players" collection
+  await firestore.collection('Players').doc(id).delete();
+
+  // Find all teams that have this player in their "players" array
+  QuerySnapshot teamsSnapshot = await firestore
+      .collection('Teams')
+      .where('players', arrayContains: id) // ✅ Find teams where "players" array contains the ID
+      .get();
+
+  // Remove the player ID from the "players" array in each matching team
+  for (var doc in teamsSnapshot.docs) {
+    await firestore.collection('Teams').doc(doc.id).update({
+      'players': FieldValue.arrayRemove([id]) // ✅ Remove ID from array
+    });
+  }
+}
+
 }

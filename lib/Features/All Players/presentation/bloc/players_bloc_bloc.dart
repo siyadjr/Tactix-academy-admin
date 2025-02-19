@@ -12,6 +12,7 @@ class PlayersBloc extends Bloc<PlayersBlocEvent, PlayersBlocState> {
   PlayersBloc(this.getPlayersUsecase) : super(PlayersBlocLoading()) {
     // Register the event handler using on<EventType>
     on<GetAllPlayersEvent>(_onGetAllPlayers);
+    on<DeletePlayerEvent>(_onDeletePlayer);
   }
 
   // Separate method for handling the event
@@ -26,5 +27,19 @@ class PlayersBloc extends Bloc<PlayersBlocEvent, PlayersBlocState> {
     } catch (e) {
       emit(PlayersBlocError("Failed to load players: ${e.toString()}"));
     }
+  }
+
+  _onDeletePlayer(
+      DeletePlayerEvent event, Emitter<PlayersBlocState> emit) async {
+    emit(PlayersBlocLoading());
+   try {
+        await getPlayersUsecase.deletePlayer(event.id);
+        // Refresh player list after deletion
+        final players = await getPlayersUsecase.getAllPlayers();
+        emit(PlayersBlocLoaded(players));
+      } catch (e) {
+        emit(PlayersBlocError(e.toString()));
+      }
+    
   }
 }

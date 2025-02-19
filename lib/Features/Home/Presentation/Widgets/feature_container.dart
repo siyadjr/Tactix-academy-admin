@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tactix_academy_admin/Core/Constants/Theme/appcolour.dart';
 import 'package:tactix_academy_admin/Features/All%20Players/presentation/pages/all_players.dart';
+import 'package:tactix_academy_admin/Features/All%20teams/presentation/pages/all_teams.dart';
 import 'package:tactix_academy_admin/Features/Home/Presentation/Widgets/options_card.dart';
 import 'package:tactix_academy_admin/Features/Home/Presentation/Widgets/settings_card.dart';
 import 'package:tactix_academy_admin/Features/Home/domain/entities/home_details.dart';
@@ -43,6 +44,7 @@ class FeaturesContainer extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
@@ -57,7 +59,7 @@ class FeaturesContainer extends StatelessWidget {
                 physics: const NeverScrollableScrollPhysics(),
                 children: [
                   OptionsCard(
-                      nextPage: const RequestLists(),
+                      nextPage: const AllTeams(),
                       icon: Icons.group,
                       title: 'Teams',
                       value: details.teamCount,

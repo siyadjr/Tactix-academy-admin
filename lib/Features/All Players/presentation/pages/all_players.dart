@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tactix_academy_admin/Core/Constants/Theme/appcolour.dart';
 import 'package:tactix_academy_admin/Core/Constants/di/service_locator.dart';
+import 'package:tactix_academy_admin/Features/All%20Players/domain/usecases/get_players_usecase.dart';
 import 'package:tactix_academy_admin/Features/All%20Players/presentation/bloc/players_bloc_bloc.dart';
 import 'package:tactix_academy_admin/Features/All%20Players/presentation/widgets/player_cards.dart';
 
@@ -57,7 +58,13 @@ class AllPlayersView extends StatelessWidget {
                     itemCount: state.players.length,
                     itemBuilder: (context, index) {
                       final player = state.players[index];
-                      return PlayerCard(player: player);
+                      return PlayerCard(
+                        player: player,
+                        onDelete: (player) {
+                          BlocProvider.of<PlayersBloc>(context)
+                              .add(DeletePlayerEvent(player.id));
+                        },
+                      );
                     },
                   );
                 },

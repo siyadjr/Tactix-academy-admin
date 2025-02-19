@@ -84,11 +84,11 @@ class ScreenHome extends StatelessWidget {
                           : Column(
                               children: [
                                 const Appbar(),
-                                Align(
+                                const Align(
                                   alignment: Alignment.centerLeft,
                                   child: Text(
                                     'Boss',
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       color: textColor,
                                       fontSize: 22,
                                       fontWeight: FontWeight.bold,

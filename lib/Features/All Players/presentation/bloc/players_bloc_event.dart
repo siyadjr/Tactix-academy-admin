@@ -8,3 +8,8 @@ sealed class PlayersBlocEvent extends Equatable {
 }
 
 class GetAllPlayersEvent extends PlayersBlocEvent {}
+
+class DeletePlayerEvent extends PlayersBlocEvent {
+  final String id;
+  const DeletePlayerEvent(this.id);
+}

@@ -2,4 +2,5 @@ import 'package:tactix_academy_admin/Features/All%20Players/data/models/player_m
 
 abstract class PlayerRepository {
   Future<List<PlayerModel>> getAllPlayers();
+  Future<void> deletePlayer(String id);
 }
