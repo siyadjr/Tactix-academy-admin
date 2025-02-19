@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tactix_academy_admin/Core/Constants/appcolour.dart';
+import 'package:tactix_academy_admin/Core/Constants/Theme/appcolour.dart';
 
 
 class CardFeature extends StatelessWidget {

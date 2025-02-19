@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:tactix_academy_admin/Core/Constants/appcolour.dart';
+import 'package:tactix_academy_admin/Core/Constants/Theme/appcolour.dart';
+import 'package:tactix_academy_admin/Features/All%20Players/presentation/pages/all_players.dart';
 import 'package:tactix_academy_admin/Features/Home/Presentation/Widgets/options_card.dart';
 import 'package:tactix_academy_admin/Features/Home/Presentation/Widgets/settings_card.dart';
+import 'package:tactix_academy_admin/Features/Home/domain/entities/home_details.dart';
 import 'package:tactix_academy_admin/Features/Licence%20Requests/Presentations/Pages/request_lists.dart';
 
 class FeaturesContainer extends StatelessWidget {
+  final HomeDetails details;
   final double? height;
 
-  const FeaturesContainer({
-    super.key,
-    this.height,
-  });
+  const FeaturesContainer({super.key, this.height, required this.details});
 
   @override
   Widget build(BuildContext context) {
@@ -56,25 +56,25 @@ class FeaturesContainer extends StatelessWidget {
               child: ListView(
                 physics: const NeverScrollableScrollPhysics(),
                 children: [
-                  const OptionsCard(
-                      nextPage: RequestLists(),
+                  OptionsCard(
+                      nextPage: const RequestLists(),
                       icon: Icons.group,
                       title: 'Teams',
-                      value: '21',
+                      value: details.teamCount,
                       color: Colors.blue),
                   const SizedBox(height: 12),
-                  const OptionsCard(
-                      nextPage: RequestLists(),
+                  OptionsCard(
+                      nextPage: AllPlayers(),
                       icon: Icons.sports_soccer,
                       title: 'Players',
-                      value: '85',
+                      value: details.playersCount,
                       color: Colors.green),
                   const SizedBox(height: 12),
-                  const OptionsCard(
-                      nextPage: RequestLists(),
+                  OptionsCard(
+                      nextPage: const RequestLists(),
                       icon: Icons.person,
                       title: 'Managers',
-                      value: '21',
+                      value: details.managersCount,
                       color: Colors.orange),
                   const SizedBox(height: 12),
                   SettingsCard(context: context),

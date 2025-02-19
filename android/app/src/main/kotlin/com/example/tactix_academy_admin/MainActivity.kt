@@ -1,5 +1,6 @@
-package com.example.tactix_academy_admin
+package com.tactix_academy_admin.app
 
 import io.flutter.embedding.android.FlutterActivity
 
-class MainActivity: FlutterActivity()
+class MainActivity: FlutterActivity() {
+}

@@ -41,6 +41,10 @@ dependencies:
   firebase_storage: ^12.3.6
   cloud_firestore: ^5.5.0
   cloudinary: ^1.2.0
+  bloc: ^8.1.4
+  get_it: ^8.0.3
+  injectable: ^2.5.0
+  equatable: ^2.0.7
 
 dev_dependencies:
   flutter_test:
