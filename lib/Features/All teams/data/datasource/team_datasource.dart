@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:tactix_academy_admin/Features/All%20teams/data/models/team_model.dart';
 
@@ -18,11 +20,12 @@ class TeamDatasource {
 
         // Fetch manager details in one query instead of two separate ones
         final managerData = await getManagerDetails(doc['managerId']);
+        
 
         final team = TeamModel.fromJson({
           'id': doc.id, // Assign document ID separately
           'playersCount': playersCount,
-          'managerId': managerData['name'] ?? 'Unknown', // Assign safely
+          'name': managerData['name'] ?? 'Unknown', // Assign safely
           'managerPhoto': managerData['userProfile'] ?? '',
 
           ...data, // Spread the document data
@@ -36,8 +39,7 @@ class TeamDatasource {
 
   Future<void> deleteTeam(String id) async {
     final firestore = FirebaseFirestore.instance;
-
-    // Delete the team document
+    log('called delete function!'); // Delete the team document
     await firestore.collection('Teams').doc(id).delete();
 
     // Find all players with this teamId
@@ -58,7 +60,7 @@ class TeamDatasource {
     final snapshot =
         await FirebaseFirestore.instance.collection('Managers').doc(id).get();
     final data = snapshot.data();
-
+    log(data?['name']);
     return {
       'name': data?['name'] ?? 'Unknown',
       'userProfile': data?['userProfile'] ?? '',

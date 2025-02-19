@@ -4,15 +4,15 @@ class Manager {
   final String name;
   final String email;
   final String id;
-  final String licenseUrl;
-  final String licenseStatus;
+  final String image;
+  final String licenseImage;
 
   Manager({
     required this.name,
     required this.email,
     required this.id,
-    required this.licenseUrl,
-    required this.licenseStatus,
+    required this.image,
+    required this.licenseImage
   });
 
   // Method to convert Firestore data into Manager instance
@@ -22,8 +22,7 @@ class Manager {
       name: data['name'] ?? 'No Name',
       email: data['email'] ?? 'No Email',
       id: doc.id,
-      licenseUrl: data['licenseUrl'] ?? '',
-      licenseStatus: data['licenseStatus'] ?? 'pending',
+      image: data['userProfile'] ?? 'pending',licenseImage: data['licenseUrl']
     );
   }
 
@@ -32,8 +31,8 @@ class Manager {
     return {
       'name': name,
       'email': email,
-      'licenseUrl': licenseUrl,
-      'licenseStatus': licenseStatus,
+      'licenseUrl': licenseImage,
+      'image': image,
     };
   }
 }

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tactix_academy_admin/Core/Constants/Theme/appcolour.dart';
-
 import 'package:tactix_academy_admin/Features/Authentication/presentations/Pages/sign_in.dart';
-import 'package:tactix_academy_admin/Features/Home/Presentation/Pages/screen_home.dart';
+
+
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -15,7 +15,7 @@ class SplashScreen extends StatelessWidget {
       Future.delayed(const Duration(seconds: 4), () {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => const ScreenHome()),
+          MaterialPageRoute(builder: (context) => const LoginPage()),
         );
       });
     });

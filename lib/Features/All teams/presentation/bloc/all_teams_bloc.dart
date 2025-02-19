@@ -10,7 +10,7 @@ class AllTeamsBloc extends Bloc<AllTeamsEvent, AllTeamsState> {
   final TeamUsecase teamUsecase;
   AllTeamsBloc(this.teamUsecase) : super(AllTeamLoading()) {
     on<GetAllTeamsEvent>(_onGetAllTeam);
-      on<DeleteTeam>(_onDeleteTeam);
+      on<DeleteTeamEvent>(_onDeleteTeam);
   }
   _onGetAllTeam(AllTeamsEvent event, Emitter<AllTeamsState> emit) async {
     emit(AllTeamLoading());
@@ -23,7 +23,7 @@ class AllTeamsBloc extends Bloc<AllTeamsEvent, AllTeamsState> {
   }
 
 
-Future<void> _onDeleteTeam(DeleteTeam event, Emitter<AllTeamsState> emit) async {
+Future<void> _onDeleteTeam(DeleteTeamEvent event, Emitter<AllTeamsState> emit) async {
   emit(AllTeamLoading()); 
   try {
     await teamUsecase.deleteTeam(event.id);

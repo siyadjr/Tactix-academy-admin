@@ -9,7 +9,7 @@ sealed class AllTeamsEvent extends Equatable {
 
 class GetAllTeamsEvent extends AllTeamsEvent {}
 
-class DeleteTeam extends AllTeamsEvent {
+class DeleteTeamEvent extends AllTeamsEvent {
   final String id;
-  const DeleteTeam(this.id);
+  const DeleteTeamEvent(this.id);
 }

@@ -27,7 +27,7 @@ class AllPlayersView extends StatelessWidget {
       backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: backgroundColor,
-        title: const Text('All Players'),
+        title: const Text('All Players', style: TextStyle(color: Colors.white)),
         elevation: 2,
       ),
       body: BlocBuilder<PlayersBloc, PlayersBlocState>(
@@ -79,7 +79,7 @@ class AllPlayersView extends StatelessWidget {
                   const SizedBox(height: 16),
                   Text(
                     "Error: ${state.message}",
-                    style: Theme.of(context).textTheme.titleMedium,
+                    style: const TextStyle(color: Colors.white),
                     textAlign: TextAlign.center,
                   ),
                 ],

@@ -23,7 +23,7 @@ class TeamModel extends Team {
   factory TeamModel.fromJson(Map<String, dynamic> json) {
     return TeamModel(
       id: json['id'] ?? '',
-      name: json['name'] ?? '',
+      name: json['name'] ,
       managerId: json['managerId'] ?? '',
       managerPhoto: json['managerPhoto'] ?? '',
       teamPhoto: json['teamPhoto'] ?? '',

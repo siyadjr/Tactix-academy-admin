@@ -4,72 +4,78 @@ import 'package:tactix_academy_admin/Features/All%20Players/data/models/player_m
 class PlayersDataSource {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  /// Fetch all players from Firestore
   Future<List<PlayerModel>> getAllPlayers() async {
-    List<PlayerModel> players = [];
-
-    // Fetch all players
+    final List<PlayerModel> players = [];
     final snapShot = await _firestore.collection('Players').get();
 
-    // Extract team IDs from player data
-    Set<String> teamIds =
-        snapShot.docs.map((doc) => doc['teamId'] as String? ?? '').toSet();
+    // 1. Safely extract team IDs with existence check
+    final Set<String> teamIds = snapShot.docs
+        .where((doc) =>
+            doc.data().containsKey('teamId')) // Filter docs with teamId field
+        .map((doc) => doc['teamId'] as String?)
+        .where(
+            (teamId) => teamId != null && teamId.isNotEmpty) // Filter valid IDs
+        .cast<String>()
+        .toSet();
 
-    // Fetch all team names in one query instead of multiple individual calls
-    Map<String, String> teamNames = await getAllTeamNames(teamIds);
+    // 2. Handle empty team IDs case
+    final Map<String, String> teamNames =
+        teamIds.isNotEmpty ? await getAllTeamNames(teamIds) : {};
 
-    for (var doc in snapShot.docs) {
-      final teamId = doc['teamId'] ?? '';
-      final teamName = teamNames[teamId] ?? 'No team Currently';
+    for (final doc in snapShot.docs) {
+      // 3. Safe field access with fallbacks
+      final data = doc.data();
+      final teamId =
+          data.containsKey('teamId') ? data['teamId'] as String? : null;
 
-      final player = PlayerModel(
+      players.add(PlayerModel(
         id: doc.id,
-        name: doc['name'],
-        teamName: teamName,
-        userProfile: doc['userProfile'],
-        email: doc['email'],
-      );
-      players.add(player);
+        name: data['name'] ?? 'Unknown Player',
+        teamName: teamNames[teamId] ?? 'No Team',
+        userProfile: data['userProfile'] ?? '',
+        email: data['email'] ?? 'No Email',
+      ));
     }
+
     return players;
   }
 
-  /// Fetch all team names at once to improve efficiency
   Future<Map<String, String>> getAllTeamNames(Set<String> teamIds) async {
-    Map<String, String> teamNames = {};
-
-    if (teamIds.isEmpty) return teamNames;
+    final Map<String, String> teamNames = {};
 
     final teamSnapshot = await _firestore
         .collection('Teams')
         .where(FieldPath.documentId, whereIn: teamIds.toList())
         .get();
 
-    for (var doc in teamSnapshot.docs) {
-      teamNames[doc.id] = doc['teamName'] ?? '';
+    for (final doc in teamSnapshot.docs) {
+      teamNames[doc.id] = doc['teamName'] as String? ?? 'Unnamed Team';
     }
 
     return teamNames;
   }
 
-Future<void> deletePlayer(String id) async {
-  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  Future<void> deletePlayer(String id) async {
+    // 4. Batch write for atomic operations
+    final batch = _firestore.batch();
 
-  // Delete the player from the "Players" collection
-  await firestore.collection('Players').doc(id).delete();
+    // Delete player document
+    final playerRef = _firestore.collection('Players').doc(id);
+    batch.delete(playerRef);
 
-  // Find all teams that have this player in their "players" array
-  QuerySnapshot teamsSnapshot = await firestore
-      .collection('Teams')
-      .where('players', arrayContains: id) // ✅ Find teams where "players" array contains the ID
-      .get();
+    // Find teams containing this player
+    final teamsQuery = await _firestore
+        .collection('Teams')
+        .where('players', arrayContains: id)
+        .get();
 
-  // Remove the player ID from the "players" array in each matching team
-  for (var doc in teamsSnapshot.docs) {
-    await firestore.collection('Teams').doc(doc.id).update({
-      'players': FieldValue.arrayRemove([id]) // ✅ Remove ID from array
-    });
+    // Update all matching teams
+    for (final teamDoc in teamsQuery.docs) {
+      batch.update(teamDoc.reference, {
+        'players': FieldValue.arrayRemove([id])
+      });
+    }
+
+    await batch.commit();
   }
-}
-
 }
