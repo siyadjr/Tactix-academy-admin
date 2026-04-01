@@ -24,11 +24,22 @@ class AllPlayersView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundColor,
+      backgroundColor: kBackgroundColor,
       appBar: AppBar(
-        backgroundColor: backgroundColor,
-        title: const Text('All Players', style: TextStyle(color: Colors.white)),
-        elevation: 2,
+        backgroundColor: kBackgroundColor,
+        elevation: 0,
+        title: const Text(
+          'Player Database',
+          style: TextStyle(
+            color: kTextColorPrimary,
+            fontWeight: FontWeight.bold,
+            fontSize: 24,
+          ),
+        ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new_rounded, color: kTextColorPrimary),
+          onPressed: () => Navigator.pop(context),
+        ),
       ),
       body: BlocBuilder<PlayersBloc, PlayersBlocState>(
         builder: (context, state) {

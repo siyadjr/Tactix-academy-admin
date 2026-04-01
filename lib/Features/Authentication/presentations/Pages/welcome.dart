@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tactix_academy_admin/Core/Constants/Theme/appcolour.dart';
+import 'package:tactix_academy_admin/Core/Widgets/custom_widgets.dart';
 import 'package:tactix_academy_admin/Features/Authentication/presentations/bloc/authentications_bloc.dart';
 import 'package:tactix_academy_admin/Features/Authentication/presentations/bloc/authentications_event.dart';
 import 'package:tactix_academy_admin/Features/Authentication/presentations/bloc/authentications_state.dart';
@@ -16,295 +17,209 @@ class WelcomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
-    return BlocConsumer<AuthBloc, AuthState>(listener: (context, state) {
-      if (state is AuthSuccess) {
-        if (context.mounted) {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (ctx) => const ScreenHome()),
-          );
+    return BlocConsumer<AuthBloc, AuthState>(
+      listener: (context, state) {
+        if (state is AuthSuccess) {
+          if (context.mounted) {
+            AppSnackBar.showSuccess(context, 'Signed in successfully');
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (ctx) => const ScreenHome()),
+            );
+          }
+        } else if (state is AuthFailure) {
+          AppSnackBar.showError(context, 'Invalid credentials. Please try again.');
         }
-      } else if (state is AuthFailure) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: const Row(
-              children: [
-                Icon(Icons.error_outline, color: Colors.white),
-                SizedBox(width: 8),
-                Text('Invalid credentials'),
-              ],
-            ),
-            backgroundColor: Colors.red.shade700,
-            behavior: SnackBarBehavior.floating,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            margin: const EdgeInsets.all(16),
-            duration: const Duration(seconds: 3),
-          ),
-        );
-      }
-    }, builder: (context, state) {
-      return Scaffold(
-        body: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: isDarkMode
-                  ? [Colors.blueGrey.shade900, Colors.black]
-                  : [backgroundColor, Colors.black],
-            ),
-          ),
-          child: SafeArea(
-            child: Center(
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(24.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      // Logo or App Icon
-                      Container(
-                        height: 100,
-                        width: 100,
-                        decoration: BoxDecoration(
-                          color: isDarkMode
-                              ? Colors.blueGrey.shade800
-                              : Colors.white,
-                          shape: BoxShape.circle,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
-                              blurRadius: 10,
-                              spreadRadius: 1,
+      },
+      builder: (context, state) {
+        return Scaffold(
+          backgroundColor: kBackgroundColor,
+          body: Row(
+            children: [
+              // Left Side: Branding (Visible only on Web/Desktop)
+              if (size.width > 800)
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.bottomLeft,
+                        end: Alignment.topRight,
+                        colors: [kBackgroundColor, kPrimaryColor.withOpacity(0.1)],
+                      ),
+                    ),
+                    child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(40.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(16),
+                              decoration: BoxDecoration(
+                                color: kPrimaryColor.withOpacity(0.1),
+                                borderRadius: BorderRadius.circular(20),
+                                border: Border.all(color: kPrimaryColor.withOpacity(0.2)),
+                              ),
+                              child: const Icon(Icons.shield_rounded, size: 64, color: kPrimaryColor),
+                            ),
+                            const SizedBox(height: 32),
+                            const Text(
+                              'Tactix Academy',
+                              style: TextStyle(
+                                fontSize: 48,
+                                fontWeight: FontWeight.bold,
+                                color: kTextColorPrimary,
+                                letterSpacing: -1,
+                              ),
+                            ),
+                            const Text(
+                              'Administration Hub',
+                              style: TextStyle(
+                                fontSize: 24,
+                                color: kPrimaryColor,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            const Text(
+                              'Manage your academy, players, and operations with our sleek, high-performance dashboard.',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: kTextColorSecondary,
+                                height: 1.5,
+                              ),
                             ),
                           ],
                         ),
-                        child: Center(
-                          child: Icon(
-                            Icons.school,
-                            size: 50,
-                            color: Theme.of(context).primaryColor,
-                          ),
-                        ),
                       ),
-                      const SizedBox(height: 24),
+                    ),
+                  ),
+                ),
 
-                      // App Name
-                      Text(
-                        'Tactix Academy',
-                        style: TextStyle(
-                          fontSize: 28,
-                          fontWeight: FontWeight.bold,
-                          color: isDarkMode
-                              ? Colors.white
-                              : Theme.of(context).primaryColor,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        'Admin Portal',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: isDarkMode
-                              ? Colors.white70
-                              : Theme.of(context).primaryColor,
-                        ),
-                      ),
-                      const SizedBox(height: 40),
+              // Right Side: Login Form
+              Expanded(
+                child: Center(
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.all(32.0),
+                      child: Container(
+                        constraints: const BoxConstraints(maxWidth: 450),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // Show Logo only on Mobile
+                            if (size.width <= 800) ...[
+                              const Center(
+                                child: Icon(Icons.shield_rounded, size: 64, color: kPrimaryColor),
+                              ),
+                              const SizedBox(height: 24),
+                              const Center(
+                                child: Text(
+                                  'Tactix Academy',
+                                  style: TextStyle(
+                                    fontSize: 28,
+                                    fontWeight: FontWeight.bold,
+                                    color: kTextColorPrimary,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 48),
+                            ],
 
-                      // Login Card
-                      Container(
-                        constraints: BoxConstraints(
-                          maxWidth: min(size.width * 0.9, 400),
-                        ),
-                        child: Card(
-                          elevation: 8,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(24.0),
-                            child: Form(
+                            const Text(
+                              'Sign In',
+                              style: TextStyle(
+                                fontSize: 32,
+                                fontWeight: FontWeight.bold,
+                                color: kTextColorPrimary,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            const Text(
+                              'Enter your credentials to access the admin portal',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: kTextColorSecondary,
+                              ),
+                            ),
+                            const SizedBox(height: 40),
+
+                            Form(
                               key: _formKey,
                               child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Text(
-                                    'Welcome Back',
-                                    style: TextStyle(
-                                      fontSize: 22,
-                                      fontWeight: FontWeight.bold,
-                                      color: Theme.of(context).primaryColor,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 8),
-                                  Text(
-                                    'Sign in to your account',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: isDarkMode
-                                          ? Colors.white70
-                                          : Colors.black54,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 24),
-
-                                  // Email Field
-                                  TextFormField(
-                                    autovalidateMode:
-                                        AutovalidateMode.onUserInteraction,
+                                  AppTextField(
                                     controller: mailController,
-                                    decoration: InputDecoration(
-                                      labelText: 'UserName',
-                                      hintText: 'Enter your Username',
-                                      prefixIcon:
-                                          const Icon(Icons.email_outlined),
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(12),
-                                        borderSide: const BorderSide(width: 1),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(12),
-                                        borderSide: BorderSide(
-                                          width: 2,
-                                          color: Theme.of(context).primaryColor,
-                                        ),
-                                      ),
-                                      contentPadding:
-                                          const EdgeInsets.symmetric(
-                                              vertical: 16),
-                                    ),
-                                    keyboardType: TextInputType.name,
+                                    label: 'Username',
+                                    hint: 'e.g., admin@tactix',
+                                    prefixIcon: Icons.person_outline,
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
                                         return 'Please enter your username';
                                       }
-
                                       return null;
                                     },
                                   ),
-                                  const SizedBox(height: 20),
-
-                                  TextFormField(
-                                    autovalidateMode:
-                                        AutovalidateMode.onUserInteraction,
+                                  const SizedBox(height: 24),
+                                  AppTextField(
                                     controller: passwordController,
-                                    decoration: InputDecoration(
-                                      labelText: 'Password',
-                                      hintText: 'Enter your password',
-                                      prefixIcon:
-                                          const Icon(Icons.lock_outline),
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(12),
-                                        borderSide: const BorderSide(width: 1),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(12),
-                                        borderSide: BorderSide(
-                                          width: 2,
-                                          color: Theme.of(context).primaryColor,
-                                        ),
-                                      ),
-                                      contentPadding:
-                                          const EdgeInsets.symmetric(
-                                              vertical: 16),
-                                    ),
+                                    label: 'Password',
+                                    hint: '••••••••',
+                                    prefixIcon: Icons.lock_outline,
+                                    isPassword: true,
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
                                         return 'Please enter your password';
                                       }
                                       if (value.length < 6) {
-                                        return 'Password must be at least 6 characters';
+                                        return 'Must be at least 6 characters';
                                       }
                                       return null;
                                     },
                                   ),
-
-                                  const SizedBox(height: 24),
-
-                                  // Login Button
-                                  SizedBox(
-                                    width: double.infinity,
-                                    height: 54,
-                                    child: ElevatedButton(
-                                      onPressed: state is AuthLoading
-                                          ? null
-                                          : () {
-                                              if (_formKey.currentState!
-                                                  .validate()) {
-                                                BlocProvider.of<AuthBloc>(
-                                                        context)
-                                                    .add(
-                                                  LoginEvent(
-                                                    mailController.text,
-                                                    passwordController.text,
-                                                  ),
-                                                );
-                                              }
-                                            },
-                                      style: ElevatedButton.styleFrom(
-                                        foregroundColor: Colors.white,
-                                        backgroundColor:
-                                            Theme.of(context).primaryColor,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                        ),
-                                        elevation: 2,
-                                      ),
-                                      child: state is AuthLoading
-                                          ? const SizedBox(
-                                              height: 24,
-                                              width: 24,
-                                              child: CircularProgressIndicator(
-                                                strokeWidth: 2,
-                                                valueColor:
-                                                    AlwaysStoppedAnimation<
-                                                        Color>(Colors.white),
-                                              ),
-                                            )
-                                          : const Text(
-                                              'Sign In',
-                                              style: TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                    ),
+                                  const SizedBox(height: 40),
+                                  AppButton(
+                                    text: 'Sign In to Dashboard',
+                                    isLoading: state is AuthLoading,
+                                    onPressed: () {
+                                      if (_formKey.currentState!.validate()) {
+                                        context.read<AuthBloc>().add(
+                                          LoginEvent(
+                                            mailController.text,
+                                            passwordController.text,
+                                          ),
+                                        );
+                                      }
+                                    },
                                   ),
                                 ],
                               ),
                             ),
-                          ),
+                            
+                            const SizedBox(height: 40),
+                            const Center(
+                              child: Text(
+                                '© 2025 Tactix Academy. Built for Performance.',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: kTextColorSecondary,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-
-                      const SizedBox(height: 24),
-                      Text(
-                        '© 2025 Tactix Academy. All rights reserved.',
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: isDarkMode ? Colors.white60 : Colors.black54,
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
                 ),
               ),
-            ),
+            ],
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
-}
-
-// Helper function to get minimum value
-T min<T extends num>(T a, T b) {
-  return a < b ? a : b;
 }

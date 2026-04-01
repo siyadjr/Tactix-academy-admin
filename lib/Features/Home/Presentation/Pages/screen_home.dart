@@ -16,108 +16,133 @@ class ScreenHome extends StatelessWidget {
     return BlocProvider(
       create: (context) => sl<HomeScreenDatasBloc>()..add(LoadHomeScreenData()),
       child: Scaffold(
-        backgroundColor: backgroundColor,
-        body: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) {
-            bool isWebLayout = constraints.maxWidth > 600;
+        backgroundColor: kBackgroundColor,
+        body: SafeArea(
+          child: LayoutBuilder(
+            builder: (BuildContext context, BoxConstraints constraints) {
+              bool isWebLayout = constraints.maxWidth > 900;
 
-            return BlocBuilder<HomeScreenDatasBloc, HomeScreenDatasState>(
-              builder: (context, state) {
-                if (state is HomeScreenDatasLoading) {
-                  return const Center(child: CircularProgressIndicator());
-                } else if (state is HomeScreenDatasError) {
-                  return Center(
-                    child: Text(
-                      'Error: ${state.message}',
-                      style: const TextStyle(color: Colors.red),
-                    ),
-                  );
-                } else if (state is HomeScreenDatasLoaded) {
-                  final homeDetails = state.homeDetails;
+              return BlocBuilder<HomeScreenDatasBloc, HomeScreenDatasState>(
+                builder: (context, state) {
+                  if (state is HomeScreenDatasLoading) {
+                    return const Center(
+                      child: CircularProgressIndicator(color: kPrimaryColor),
+                    );
+                  } else if (state is HomeScreenDatasError) {
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(Icons.error_outline,
+                              color: kErrorColor, size: 48),
+                          const SizedBox(height: 16),
+                          Text(
+                            'Error: ${state.message}',
+                            style: const TextStyle(color: kTextColorSecondary),
+                          ),
+                          TextButton(
+                            onPressed: () => context
+                                .read<HomeScreenDatasBloc>()
+                                .add(LoadHomeScreenData()),
+                            child: const Text('Retry',
+                                style: TextStyle(color: kPrimaryColor)),
+                          )
+                        ],
+                      ),
+                    );
+                  } else if (state is HomeScreenDatasLoaded) {
+                    final homeDetails = state.homeDetails;
 
-                  return SingleChildScrollView(
-                    child: Padding(
-                      padding: const EdgeInsets.all(11.0),
-                      child: isWebLayout
-                          ? Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  width: constraints.maxWidth * 0.5,
-                                  height: constraints.maxWidth * 0.5,
-                                  decoration: const BoxDecoration(
-                                    image: DecorationImage(
-                                      image:
-                                          AssetImage('assets/images/boss.png'),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 20),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      const Appbar(),
-                                      const Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          'Boss',
-                                          style: TextStyle(
-                                            color: textColor,
-                                            fontSize: 22,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox(height: 20),
-                                      FeaturesContainer(
-                                        height: constraints.maxWidth * 0.5,
+                    return SingleChildScrollView(
+                      padding: const EdgeInsets.all(24.0),
+                      child: Center(
+                        child: Container(
+                          constraints: const BoxConstraints(maxWidth: 1200),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Appbar(),
+                              const SizedBox(height: 32),
+                              if (isWebLayout)
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Expanded(
+                                      flex: 3,
+                                      child: FeaturesContainer(
                                         details: homeDetails,
                                       ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            )
-                          : Column(
-                              children: [
-                                const Appbar(),
-                                const Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    'Boss',
-                                    style: TextStyle(
-                                      color: textColor,
-                                      fontSize: 22,
-                                      fontWeight: FontWeight.bold,
                                     ),
-                                  ),
-                                ),
-                                Container(
-                                  width: constraints.maxWidth * 0.8,
-                                  height: constraints.maxWidth * 0.8,
-                                  decoration: const BoxDecoration(
-                                    image: DecorationImage(
-                                      image:
-                                          AssetImage('assets/images/boss.png'),
-                                      fit: BoxFit.cover,
+                                    const SizedBox(width: 32),
+                                    Expanded(
+                                      flex: 2,
+                                      child: _buildBrandingCard(constraints),
                                     ),
-                                  ),
-                                ),
-                                const SizedBox(height: 20),
+                                  ],
+                                )
+                              else ...[
+                                _buildBrandingCard(constraints),
+                                const SizedBox(height: 32),
                                 FeaturesContainer(details: homeDetails),
                               ],
-                            ),
-                    ),
-                  );
-                }
-                return const SizedBox();
-              },
-            );
-          },
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  }
+                  return const SizedBox();
+                },
+              );
+            },
+          ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildBrandingCard(BoxConstraints constraints) {
+    return Container(
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        color: kSurfaceColor,
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(color: Colors.white.withOpacity(0.05)),
+      ),
+      child: Column(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(16),
+            child: Image.asset(
+              'assets/images/boss.png',
+              height: 200,
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) => Container(
+                height: 200,
+                color: kPrimaryColor.withOpacity(0.1),
+                child: const Icon(Icons.person, color: kPrimaryColor, size: 64),
+              ),
+            ),
+          ),
+          const SizedBox(height: 20),
+          const Text(
+            'Academy Management',
+            style: TextStyle(
+              color: kTextColorPrimary,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: 8),
+          const Text(
+            'You are logged in as Administrator',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: kTextColorSecondary,
+              fontSize: 14,
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:tactix_academy_admin/Core/Constants/Theme/appcolour.dart';
 
@@ -11,67 +10,52 @@ class ErrorView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        width: 400,
-        padding: const EdgeInsets.all(30),
+        constraints: const BoxConstraints(maxWidth: 400),
+        padding: const EdgeInsets.all(40),
         decoration: BoxDecoration(
-          color: const Color(0xFF1A1A1A),
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: Colors.red[700]!.withOpacity(0.5)),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.3),
-              blurRadius: 15,
-              spreadRadius: 5,
-            ),
-          ],
+          color: kSurfaceColor,
+          borderRadius: BorderRadius.circular(24),
+          border: Border.all(color: kErrorColor.withOpacity(0.1)),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
-                color: Colors.red[900]?.withOpacity(0.1),
+                color: kErrorColor.withOpacity(0.1),
                 shape: BoxShape.circle,
-                border: Border.all(color: Colors.red[700]!.withOpacity(0.5)),
               ),
-              child:
-                  Icon(Icons.error_outline, size: 70, color: Colors.red[400]),
+              child: const Icon(Icons.warning_amber_rounded, size: 64, color: kErrorColor),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 32),
             const Text(
-              'Error Occurred',
+              'Oops! Something Went Wrong',
+              textAlign: TextAlign.center,
               style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold),
+                color: kTextColorPrimary,
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 12),
             Text(
               message,
-              style:
-                  TextStyle(color: Colors.grey[300], fontSize: 14, height: 1.5),
               textAlign: TextAlign.center,
+              style: const TextStyle(color: kTextColorSecondary, fontSize: 14, height: 1.5),
             ),
-            const SizedBox(height: 30),
-            ElevatedButton.icon(
-              onPressed: onRetry,
-              icon: const Icon(Icons.refresh, size: 18),
-              label: const Text('RETRY'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: secondarySplash,
-                foregroundColor: Colors.white,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 30, vertical: 16),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12)),
-                elevation: 4,
-                shadowColor: secondarySplash.withOpacity(0.4),
-                textStyle: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 1,
+            const SizedBox(height: 40),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                onPressed: onRetry,
+                icon: const Icon(Icons.refresh_rounded),
+                label: const Text('Try Again'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: kErrorColor,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.all(16),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                 ),
               ),
             ),

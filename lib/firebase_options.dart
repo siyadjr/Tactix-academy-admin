@@ -23,11 +23,20 @@ class DefaultFirebaseOptions {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        return ios;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for ios - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
-        return windows;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for windows - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -41,52 +50,20 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCihDNMv0j_QjRYiU3bRrS5Ap21dA1sYqU',
-    appId: '1:756855490028:web:0dff14ace160f793d5acc9',
-    messagingSenderId: '756855490028',
-    projectId: 'tactix-academy',
-    authDomain: 'tactix-academy.firebaseapp.com',
-    storageBucket: 'tactix-academy.firebasestorage.app',
-    measurementId: 'G-NEFTB8VCDX',
+    apiKey: 'AIzaSyDKtWBjtANeNmIDS2xy89T-Lk2xZQbCbbI',
+    appId: '1:482963155468:web:a85c43147270cdc001dc29',
+    messagingSenderId: '482963155468',
+    projectId: 'tactix-academy-e9b38',
+    authDomain: 'tactix-academy-e9b38.firebaseapp.com',
+    storageBucket: 'tactix-academy-e9b38.firebasestorage.app',
+    measurementId: 'G-X839TXCKVB',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCCYx2NT-80EGZpFG3b_nXI1j9Q4gHrXXo',
-    appId: '1:756855490028:android:6a56af88de4b8933d5acc9',
-    messagingSenderId: '756855490028',
-    projectId: 'tactix-academy',
-    storageBucket: 'tactix-academy.firebasestorage.app',
-  );
-
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyD6-6NW2L0W4I_cvgIHZT6pbpJV65mSFa8',
-    appId: '1:756855490028:ios:438a8d26e5a811bed5acc9',
-    messagingSenderId: '756855490028',
-    projectId: 'tactix-academy',
-    storageBucket: 'tactix-academy.firebasestorage.app',
-    androidClientId: '756855490028-0qbqh1pk1vro1a0ukbhb5c3kgfurd59q.apps.googleusercontent.com',
-    iosClientId: '756855490028-9pcl48i4todnvthmbgu6ablfbbuh5993.apps.googleusercontent.com',
-    iosBundleId: 'com.example.tactixAcademyAdmin',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyD6-6NW2L0W4I_cvgIHZT6pbpJV65mSFa8',
-    appId: '1:756855490028:ios:438a8d26e5a811bed5acc9',
-    messagingSenderId: '756855490028',
-    projectId: 'tactix-academy',
-    storageBucket: 'tactix-academy.firebasestorage.app',
-    androidClientId: '756855490028-0qbqh1pk1vro1a0ukbhb5c3kgfurd59q.apps.googleusercontent.com',
-    iosClientId: '756855490028-9pcl48i4todnvthmbgu6ablfbbuh5993.apps.googleusercontent.com',
-    iosBundleId: 'com.example.tactixAcademyAdmin',
-  );
-
-  static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyCihDNMv0j_QjRYiU3bRrS5Ap21dA1sYqU',
-    appId: '1:756855490028:web:fa61ba1d0a23a201d5acc9',
-    messagingSenderId: '756855490028',
-    projectId: 'tactix-academy',
-    authDomain: 'tactix-academy.firebaseapp.com',
-    storageBucket: 'tactix-academy.firebasestorage.app',
-    measurementId: 'G-19T7FWNHZ0',
+    apiKey: 'AIzaSyBQarY9Tc7bn25s8mLH8Fpjm57vUi6ukKo',
+    appId: '1:482963155468:android:dbf24e8ff80feb8c01dc29',
+    messagingSenderId: '482963155468',
+    projectId: 'tactix-academy-e9b38',
+    storageBucket: 'tactix-academy-e9b38.firebasestorage.app',
   );
 }

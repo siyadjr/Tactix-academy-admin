@@ -1,1 +1,36 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"tactix-academy","appId":"1:756855490028:android:6a56af88de4b8933d5acc9","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"tactix-academy","configurations":{"android":"1:756855490028:android:6a56af88de4b8933d5acc9","ios":"1:756855490028:ios:438a8d26e5a811bed5acc9","macos":"1:756855490028:ios:438a8d26e5a811bed5acc9","web":"1:756855490028:web:0dff14ace160f793d5acc9","windows":"1:756855490028:web:fa61ba1d0a23a201d5acc9"}}}}}}
+{
+  "hosting": {
+    "public": "build/web",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  },
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "tactix-academy-e9b38",
+          "appId": "1:482963155468:android:dbf24e8ff80feb8c01dc29",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "tactix-academy-e9b38",
+          "configurations": {
+            "android": "1:482963155468:android:dbf24e8ff80feb8c01dc29",
+            "web": "1:482963155468:web:a85c43147270cdc001dc29"
+          }
+        }
+      }
+    }
+  }
+}

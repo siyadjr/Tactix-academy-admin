@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tactix_academy_admin/Core/Constants/Theme/appcolour.dart';
+import 'package:tactix_academy_admin/Core/Widgets/custom_widgets.dart';
 import 'package:tactix_academy_admin/Features/All%20Players/data/models/player_model.dart';
 
 class PlayerCard extends StatelessWidget {
@@ -14,160 +15,106 @@ class PlayerCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: splashColor,
-      elevation: 6,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
+    return Container(
+      decoration: BoxDecoration(
+        color: kSurfaceColor,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: Colors.white.withOpacity(0.05)),
       ),
       clipBehavior: Clip.antiAlias,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Stack(
-            children: [
-              // Profile Image
-              Container(
-                height: 160,
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade200,
-                ),
-                child: player.userProfile != null &&
-                        player.userProfile.isNotEmpty
-                    ? Image.network(
-                        player.userProfile,
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) {
-                          return const Center(
-                            child: Icon(
-                              Icons.person,
-                              size: 64,
-                              color: Colors.grey,
-                            ),
-                          );
-                        },
-                        loadingBuilder: (context, child, loadingProgress) {
-                          if (loadingProgress == null) return child;
-                          return Center(
-                            child: CircularProgressIndicator(
-                              color: Theme.of(context).primaryColor,
-                              value: loadingProgress.expectedTotalBytes != null
-                                  ? loadingProgress.cumulativeBytesLoaded /
-                                      loadingProgress.expectedTotalBytes!
-                                  : null,
-                            ),
-                          );
-                        },
-                      )
-                    : const Center(
-                        child: Icon(
-                          Icons.person,
-                          size: 64,
-                          color: Colors.grey,
+          Expanded(
+            child: Stack(
+              children: [
+                // Profile Image
+                Positioned.fill(
+                  child: player.userProfile != null && player.userProfile.isNotEmpty
+                      ? Image.network(
+                          player.userProfile,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) => Container(
+                            color: kPrimaryColor.withOpacity(0.1),
+                            child: const Icon(Icons.person, size: 48, color: kPrimaryColor),
+                          ),
+                        )
+                      : Container(
+                          color: kPrimaryColor.withOpacity(0.1),
+                          child: const Icon(Icons.person, size: 48, color: kPrimaryColor),
                         ),
+                ),
+                // Gradient Overlay
+                Positioned.fill(
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Colors.transparent,
+                          Colors.black.withOpacity(0.8),
+                        ],
                       ),
-              ),
-
-              // Delete Button
-              Positioned(
-                top: 8,
-                right: 8,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.7),
-                    shape: BoxShape.circle,
-                  ),
-                  child: IconButton(
-                    icon: const Icon(
-                      Icons.delete_outline,
-                      color: Colors.white,
                     ),
-                    onPressed: () => _showDeleteConfirmation(context),
-                    tooltip: 'Delete player',
-                    iconSize: 20,
                   ),
                 ),
-              ),
-            ],
-          ),
-
-          // Player Info Section
-          InkWell(
-            onTap: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text('Selected player: ${player.name}'),
-                  duration: const Duration(seconds: 1),
-                  behavior: SnackBarBehavior.floating,
-                  shape: RoundedRectangleBorder(
+                // Delete Button
+                Positioned(
+                  top: 12,
+                  right: 12,
+                  child: Material(
+                    color: kErrorColor.withOpacity(0.9),
                     borderRadius: BorderRadius.circular(8),
+                    child: InkWell(
+                      onTap: () => _showDeleteConfirmation(context),
+                      borderRadius: BorderRadius.circular(8),
+                      child: const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Icon(Icons.delete_outline_rounded, color: Colors.white, size: 20),
+                      ),
+                    ),
                   ),
                 ),
-              );
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
+                // Name and Team (Overlayed)
+                Positioned(
+                  bottom: 12,
+                  left: 12,
+                  right: 12,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Expanded(
-                        child: Text(
-                          player.name,
-                          style:
-                              Theme.of(context).textTheme.titleMedium?.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                  ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
+                      Text(
+                        player.name,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
                         ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
+                      const SizedBox(height: 4),
                       Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 4),
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                         decoration: BoxDecoration(
-                          color:
-                              Theme.of(context).primaryColor.withOpacity(0.2),
-                          borderRadius: BorderRadius.circular(12),
+                          color: kPrimaryColor.withOpacity(0.3),
+                          borderRadius: BorderRadius.circular(4),
+                          border: Border.all(color: kPrimaryColor.withOpacity(0.5)),
                         ),
                         child: Text(
-                          player.teamName ?? "Player",
-                          style: TextStyle(
-                            color: Theme.of(context).primaryColor,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 12,
+                          player.teamName ?? "Free Agent",
+                          style: const TextStyle(
+                            color: Colors.white70,
+                            fontSize: 10,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 8),
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.group,
-                        size: 16,
-                        color: Colors.grey,
-                      ),
-                      const SizedBox(width: 4),
-                      Expanded(
-                        child: Text(
-                          "Team: ${player.teamName}",
-                          style:
-                              Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                    color: Colors.grey[600],
-                                    fontSize: 14,
-                                  ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ],
@@ -179,34 +126,29 @@ class PlayerCard extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Delete Player'),
+        backgroundColor: kSurfaceColor,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: const Text('Delete Player', style: TextStyle(color: kTextColorPrimary)),
         content: Text(
-            'Are you sure you want to delete ${player.name} from the system?'),
+          'Are you sure you want to delete ${player.name}? This action cannot be undone.',
+          style: const TextStyle(color: kTextColorSecondary),
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('CANCEL'),
+            child: const Text('Cancel', style: TextStyle(color: kTextColorSecondary)),
           ),
-          TextButton(
-            style: TextButton.styleFrom(
-              foregroundColor: Colors.red,
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: kErrorColor,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
             ),
             onPressed: () {
-              // Call the delete function
-              if (onDelete != null) {
-                onDelete!(player);
-              }
+              if (onDelete != null) onDelete!(player);
               Navigator.pop(context);
-              // Show confirmation snackbar
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text('${player.name} has been deleted'),
-                  backgroundColor: Colors.red,
-                  behavior: SnackBarBehavior.floating,
-                ),
-              );
+              AppSnackBar.showError(context, '${player.name} has been deleted');
             },
-            child: const Text('DELETE'),
+            child: const Text('Delete', style: TextStyle(color: Colors.white)),
           ),
         ],
       ),

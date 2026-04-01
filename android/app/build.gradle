@@ -39,7 +39,7 @@ android {
     defaultConfig {
         // Updated application ID
         applicationId = "com.tactix_academy_admin.app"
-        minSdk = 23
+        minSdkVersion = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutterVersionCode.toInteger()
         versionName = flutterVersionName

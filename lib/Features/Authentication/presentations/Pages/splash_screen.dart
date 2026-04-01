@@ -31,40 +31,40 @@ class SplashScreen extends StatelessWidget {
     final double fontSize = screenSize.width < 600 ? 20.sp : 24.sp;
 
     return Scaffold(
-      backgroundColor: splashColor,
+      backgroundColor: kBackgroundColor,
       body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                width: logoSize,
-                height: logoSize,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: const AssetImage('assets/images/splashPhoto.png'),
-                    fit: BoxFit.contain,
-                    onError: (exception, stackTrace) {
-                      debugPrint('Error loading splash image: $exception');
-                    },
-                  ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              width: logoSize,
+              height: logoSize,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/images/splashPhoto.png'),
+                  fit: BoxFit.contain,
                 ),
               ),
-              const SizedBox(height: 20),
-              Text(
-                'Tactix Boss',
-                style: TextStyle(
-                  color: secondarySplash,
-                  fontSize: fontSize,
-                  fontWeight: FontWeight.w900,
-                ),
+            ),
+            const SizedBox(height: 24),
+            Text(
+              'TACTIX ACADEMY',
+              style: TextStyle(
+                color: kTextColorPrimary,
+                fontSize: fontSize,
+                fontWeight: FontWeight.w900,
+                letterSpacing: 2,
               ),
-              const SizedBox(height: 30),
-              const CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(secondarySplash),
+            ),
+            const SizedBox(height: 40),
+            const SizedBox(
+              width: 150,
+              child: LinearProgressIndicator(
+                backgroundColor: kSurfaceColor,
+                valueColor: AlwaysStoppedAnimation<Color>(kPrimaryColor),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

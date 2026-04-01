@@ -12,20 +12,46 @@ class Appbar extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const Text(
-          'Welcome Back!!',
-          style: TextStyle(
-              color: textColor, fontSize: 25, fontWeight: FontWeight.bold),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: const [
+            Text(
+              'Welcome Back,',
+              style: TextStyle(
+                color: kTextColorSecondary,
+                fontSize: 16,
+              ),
+            ),
+            Text(
+              'Administrator',
+              style: TextStyle(
+                color: kTextColorPrimary,
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+                letterSpacing: -0.5,
+              ),
+            ),
+          ],
         ),
-        IconButton(
+        Container(
+          decoration: BoxDecoration(
+            color: kSurfaceColor,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: Colors.white.withOpacity(0.05)),
+          ),
+          child: IconButton(
             onPressed: () {
               Navigator.push(
-                  context, MaterialPageRoute(builder: (ctx) => const RequestLists()));
+                context,
+                MaterialPageRoute(builder: (ctx) => const RequestLists()),
+              );
             },
             icon: const Icon(
-              Icons.mail,
-              color: textColor,
-            ))
+              Icons.notifications_outlined,
+              color: kPrimaryColor,
+            ),
+          ),
+        ),
       ],
     );
   }

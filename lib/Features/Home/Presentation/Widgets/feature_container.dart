@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:tactix_academy_admin/Core/Constants/Theme/appcolour.dart';
-
 import 'package:tactix_academy_admin/Features/All%20Players/presentation/pages/all_players.dart';
 import 'package:tactix_academy_admin/Features/All%20teams/presentation/pages/all_teams.dart';
 import 'package:tactix_academy_admin/Features/Home/Presentation/Widgets/options_card.dart';
@@ -15,67 +14,67 @@ class FeaturesContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double containerHeight =
-        height ?? MediaQuery.of(context).size.width * 1.2;
-
     return Container(
-      width: MediaQuery.of(context).size.width,
-      height: containerHeight,
+      width: double.infinity,
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            // Theme.of(context).primaryColor,
-            textColor,
-            textColor.withOpacity(0.8),
-            Colors.black87,
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
+        color: kSurfaceColor,
         borderRadius: BorderRadius.circular(24),
+        border: Border.all(color: Colors.white.withOpacity(0.05)),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.2),
-            blurRadius: 12,
-            offset: const Offset(0, 4),
+            blurRadius: 20,
+            offset: const Offset(0, 10),
           ),
         ],
       ),
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(24.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Dashboard Overview',
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    color: Colors.white,
+            Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: kPrimaryColor.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: const Icon(Icons.dashboard_rounded,
+                      color: kPrimaryColor, size: 20),
+                ),
+                const SizedBox(width: 12),
+                const Text(
+                  'Quick Actions',
+                  style: TextStyle(
+                    color: kTextColorPrimary,
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
+                ),
+              ],
             ),
-            Expanded(
-              child: ListView(
-                physics: const NeverScrollableScrollPhysics(),
-                children: [
-                  OptionsCard(
-                      nextPage: const AllTeams(),
-                      icon: Icons.group,
-                      title: 'Teams',
-                      value: details.teamCount,
-                      color: Colors.blue),
-                  const SizedBox(height: 12),
-                  OptionsCard(
-                      nextPage: AllPlayers(),
-                      icon: Icons.sports_soccer,
-                      title: 'Players',
-                      value: details.playersCount,
-                      color: Colors.green),
-                  const SizedBox(height: 12),
-                  SettingsCard(context: context),
-                ],
-              ),
+            const SizedBox(height: 24),
+            OptionsCard(
+              nextPage: const AllTeams(),
+              icon: Icons.groups_rounded,
+              title: 'Team Management',
+              value: details.teamCount,
+              color: Colors.blueAccent,
             ),
+            const SizedBox(height: 16),
+            OptionsCard(
+              nextPage: AllPlayers(),
+              icon: Icons.directions_run_rounded,
+              title: 'Player Database',
+              value: details.playersCount,
+              color: Colors.greenAccent,
+            ),
+            const SizedBox(height: 24),
+            const Divider(color: Colors.white10),
+            const SizedBox(height: 16),
+            SettingsCard(context: context),
           ],
         ),
       ),
