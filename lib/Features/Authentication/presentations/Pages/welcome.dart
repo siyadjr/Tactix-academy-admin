@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tactix_academy_admin/Core/Constants/Theme/appcolour.dart';
 import 'package:tactix_academy_admin/Core/Widgets/custom_widgets.dart';
+import 'package:tactix_academy_admin/Core/services/notification_service.dart';
 import 'package:tactix_academy_admin/Features/Authentication/presentations/bloc/authentications_bloc.dart';
 import 'package:tactix_academy_admin/Features/Authentication/presentations/bloc/authentications_event.dart';
 import 'package:tactix_academy_admin/Features/Authentication/presentations/bloc/authentications_state.dart';
@@ -23,6 +24,7 @@ class WelcomePage extends StatelessWidget {
         if (state is AuthSuccess) {
           if (context.mounted) {
             AppSnackBar.showSuccess(context, 'Signed in successfully');
+            NotificationService().updateAdminFcmToken();
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (ctx) => const ScreenHome()),

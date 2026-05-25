@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:tactix_academy_admin/Core/Constants/di/service_locator.dart';
+import 'package:tactix_academy_admin/Core/services/notification_service.dart';
 import 'package:tactix_academy_admin/Features/Authentication/presentations/Pages/splash_screen.dart';
 import 'package:tactix_academy_admin/Features/Authentication/presentations/bloc/authentications_bloc.dart';
 import 'package:tactix_academy_admin/Features/Home/Presentation/bloc/home_screen_datas_bloc.dart';
@@ -17,6 +18,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await NotificationService().init();
 
   runApp(const MyApp());
 }

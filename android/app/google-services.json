@@ -7,6 +7,50 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:482963155468:android:cc3b75ddc0275cfc01dc29",
+        "android_client_info": {
+          "package_name": "com.example.tactix_academy_players"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "482963155468-ksoqb0jqv6r3b3g84cde2ojdn53ea6sn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tactix_academy_players",
+            "certificate_hash": "b6e14ac501061cfa6f968ac4cf3818f11bafafbc"
+          }
+        },
+        {
+          "client_id": "482963155468-4qh8seu7sc00jcrducqsrivalj8ksgnc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQarY9Tc7bn25s8mLH8Fpjm57vUi6ukKo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "482963155468-4qh8seu7sc00jcrducqsrivalj8ksgnc.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "482963155468-3e018blm7toh5d9d5n7bdoudie028973.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.tactixAcademyPlayers"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:482963155468:android:dbf24e8ff80feb8c01dc29",
         "android_client_info": {
           "package_name": "com.tactix_academy_admin.app"
@@ -31,10 +75,10 @@
               "client_type": 3
             },
             {
-              "client_id": "482963155468-4vtt8a5g13dk52rbl60ga9vm7i931j2l.apps.googleusercontent.com",
+              "client_id": "482963155468-3e018blm7toh5d9d5n7bdoudie028973.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.tactixacademy.manager"
+                "bundle_id": "com.example.tactixAcademyPlayers"
               }
             }
           ]
@@ -75,10 +119,10 @@
               "client_type": 3
             },
             {
-              "client_id": "482963155468-4vtt8a5g13dk52rbl60ga9vm7i931j2l.apps.googleusercontent.com",
+              "client_id": "482963155468-3e018blm7toh5d9d5n7bdoudie028973.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.tactixacademy.manager"
+                "bundle_id": "com.example.tactixAcademyPlayers"
               }
             }
           ]
